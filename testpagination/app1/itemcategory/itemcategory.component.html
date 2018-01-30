@@ -1,0 +1,73 @@
+
+<form class="form-horizontal" (ngSubmit)="onSubmit(form.value)" #frm="ngForm">
+  <fieldset>
+    <div id="legend">
+      <legend class="">Item Category</legend>
+    </div>
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="memberid">MemberId</label>
+      <div class="controls">
+        <input type="text" id="memberid" name="memberid" #mid="ngModel" class="input-xlarge" [(ngModel)]="idmember">
+       
+      
+        <div *ngIf="frm.submitted">
+            MemId is required.
+         </div>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="itemcat">Item Category</label>
+      <div class="controls">
+        <input type="text" id="item_category" name="item_category" required #cat="ngModel" class="input-xlarge" [(ngModel)]="itemcat" >
+        <div *ngIf="cat.errors && (cat.dirty || cat.touched )" class="alert">
+            Please Enter Item Category
+          </div>
+      </div>
+    </div>
+ <br/>
+    <div class="control-group">
+      <!-- Button -->
+      <div class="controls">
+        <button type="submit" class="class={{buttonClass}}" [disabled]="!frm.valid">{{submitbtn}}</button>
+        <button type="button" class="btn btn-clear" (click)="resetFunction();">Reset</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+
+<div class="clearfix"></div>
+<div class="row" *ngIf="showMessage" class="displaymsg">
+    <div class="col-sm-6 col-sm-offset-3">
+     <div class="alert {{alert_class}} text-center">{{this.successJson.msg}}</div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<table border="1" align="center">
+  <thead>
+    <th>id</th>
+    <th>memberid</th>
+    <th>Category</th>
+    <th>EDIT</th>
+    <th>DELETE</th>
+  </thead>
+
+
+    <tbody>
+        <tr *ngIf="returnJson.length==0">
+            <td colspan="6">No Records Found</td>
+          </tr>
+      <tr *ngFor="let rec of returnJson;let i = index"> 
+        <td align="center" valign="middle">{{i+1}}</td>
+        <td>{{rec.created_by}}</td>
+        <td>{{rec.item_category_name}}</td>
+        <td><a  (click)="getItemEdit(rec)">Edit</a></td>
+        <td><a  (click)="deleteItem(rec.item_category_id)">Delete</a></td>
+      </tr>
+     </tbody>
+    </table>

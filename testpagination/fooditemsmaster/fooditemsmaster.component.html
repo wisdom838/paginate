@@ -1,0 +1,210 @@
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<h1>Food Items <small>Master</small></h1>
+
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a>
+			</li>
+			<li class="active">Dashboard</li>
+		</ol>
+	</section>
+	<!-- Main content -->
+	<section class="content">
+	<div class="row">
+		
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-t-5">
+				<div class="box box-info m-b-5">
+				<form class="form-horizontal" #frm="ngForm"  (ngSubmit)="OnSubmit(frm.value)" enctype="multipart/form-data">
+					<div class="box-header with-border">
+						<div class="col-lg-7 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-1">
+							
+              <div class="box-body">
+                <div class="form-group">
+								<label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Food Item Name *</label>
+
+								<div class="col-lg-7 col-md-6 col-sm-5 col-xs-12">
+									<input type="text" name="item_name" required #finame="ngModel"class="form-control" placeholder="Name" [(ngModel)]="ItemName"/>
+                  <p *ngIf="finame.errors && (finame.dirty || finame.touched)" class="error-red">Select Item Name</p>
+                </div>
+               
+							</div>
+               
+               <div class="form-group">
+								<label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Code </label>
+
+								<div class="col-lg-7 col-md-6 col-sm-5 col-xs-12">
+									<input type="text" name="item_code" class="form-control" placeholder="Code" [(ngModel)]="ItemCode"/>
+								</div>
+							</div>
+               <div class="form-group">
+								<label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Description</label>
+
+								<div class="col-lg-7 col-md-6 col-sm-5 col-xs-12">
+								<textarea class="form-control" name="item_description" placeholder="Description" [(ngModel)]="itemDes"></textarea>
+								</div>
+							</div>
+             
+             <div class="form-group">
+								<label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Image</label>
+
+								<div class="col-lg-7 col-md-6 col-sm-5 col-xs-12">
+									
+									<input type="file" name="item_image" required (change)="fileChange(input)" #input />
+									<p ><img [attr.src]='file_srcs[0]' alt=""/><p>
+								</div>
+							</div>
+
+							
+              <div class="form-group">
+								<label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Quantity Form</label>
+
+								<div class="col-lg-7 col-md-6 col-sm-5 col-xs-12">
+									<select class="form-control" name="item_quantity_form" [(ngModel)]="Qform">	
+										<option value="">Select Quantity Form</option>
+										<option value="1">Liquid</option>
+										<option value="2">Condiments</option>									
+									</select>
+								</div>
+							</div>
+             <div class="form-group">
+								<label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Quantity type</label>
+
+								<div class="col-lg-7 col-md-6 col-sm-5 col-xs-12">
+									<select class="form-control" name="item_quantity_type" [(ngModel)]="Qtype">
+										<option value="">Select Quantity type</option>
+										<option *ngFor="let quanform of returnquanJson" value={{quanform.item_quantity_type}}>{{quanform.item_quantity_type_name}}</option>
+									</select>
+								</div>
+							</div>
+          
+           <div class="form-group">
+		<label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Select Hot / Cold</label>
+		 <div class="col-lg-7 col-md-6 col-sm-5 col-xs-12">
+		  <div class="form-check">
+		   <label class="form-check-label normal-txt"><input class="form-check-input"  name="item_attribute"  type="radio" [(ngModel)]="Itemattribute" value="1"> Hot</label>
+		   <label class="form-check-label normal-txt"><input class="form-check-input"  name="item_attribute"  type="radio" [(ngModel)]="Itemattribute" value="2"> Cold</label>
+		</div>
+		</div>
+		</div>
+          
+          <div class="form-group">
+                <label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Food Type *</label>
+                <div class="col-lg-7 col-md-6 col-sm-5 col-xs-12">
+                <select class="form-control" name="item_veg_type" required #ftype="ngModel" [(ngModel)]="FoodType">
+                  <option value="">Select Type</option>
+                  <option>Veg</option>
+                  <option>Non Veg</option>
+                </select>
+                <p *ngIf="ftype.errors && (ftype.dirty || ftype.touched)" class="error-red">Select Food Type</p>
+			  </div>
+               
+              </div>
+              
+              <div class="form-group">
+		     <label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Sub Type</label>
+			 <div class="col-lg-7 col-md-6 col-sm-7 col-xs-12">&nbsp;
+			<label class="checkbox-inline" *ngFor="let vstype of returnstypeJson"><input value=""  type="checkbox" name="item_veg_subtype">{{vstype.veg_subtype_name}}</label>
+			
+		    </div>
+		</div>
+             
+             
+             <div class="form-group">
+		  <label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Item Category</label>
+		    <div class="col-lg-7 col-md-6 col-sm-7 col-xs-12">&nbsp;
+			<label class="checkbox-inline" *ngFor="let icat of returnicatJson"><input type="checkbox"  name="itemcategory" >{{icat.menu_categoryname}}</label>
+
+		    </div>
+		 </div>
+             
+            <div class="form-group">
+	      <label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Sub Category</label>
+         <div class="col-lg-7 col-md-6 col-sm-5 col-xs-12">
+	 <select class="form-control select2 select2-hidden-accessible"  name="item_veg_subtype" data-placeholder="Select Sub Category" style="width: 100%;" tabindex="-1" aria-hidden="true" [(ngModel)]="ItemSubCat">
+	   <option value="">Please Selet SubCategory</option>
+	   <option  *ngFor="let subtype of returnSubJson" value={{subtype.menu_sub_categoryid}}>{{subtype.menu_sub_categoryname}}</option>   
+	 </select>
+            </div>
+		 </div>   
+              </div>
+              <!-- /.box-body -->				
+		    </div>	
+		    <div class="clearfix"></div>
+                <div class="box-footer text-center col-lg-12 col-md-12">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-info">Clear</button>
+              	</div>	
+		</div>			
+            </form>
+	  </div>
+	</div>	
+	</div>
+	<!-- Row Ends Here -->
+	<div class="row">
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-t-5">
+				<div class="box box-info m-b-5">
+				  <div class="box-header with-border m-b-0 p-b-0">
+             		  <h3 class="box-title">Food Items Master</h3>
+            		</div>
+            		<div class="box-body table-responsive p-t-0">
+              <table class="table table-bordered table-striped">
+               <thead>
+                 <tr>
+                  <th class="text-center thbgcolor">S.No</th>
+                  <th class="text-center thbgcolor">Item Name</th>
+                  <th class="text-center thbgcolor">Item Description</th>
+                  <th class="text-center thbgcolor">Food Type</th>
+                  <th class="text-center thbgcolor">Image</th>
+                  <th class="text-center thbgcolor">Edit</th>
+                  <th class="text-center thbgcolor">Delete</th>
+                </tr>
+               </thead>
+                <tbody>
+                <tr>
+                  <td class="text-center">1.</td>
+                  <td class="text-center">Apple</td>
+                  <td class="text-center">&nbsp;</td>
+                  <td class="text-center">Veg</td>
+                  <td class="text-center"><img src="" alt="Image" /></td>
+                  <td class="text-center"><a href="#"><i class="fa fa-pencil-square-o"></i></a></td>
+                  <td class="text-center"><a href="#"><i class="fa fa-fw fa-trash"></i></a></td>
+                </tr>
+                <tr>
+                  <td class="text-center">2.</td>
+                  <td class="text-center">Corn Flakes</td>
+                  <td class="text-center">&nbsp;</td>
+                  <td class="text-center">Veg</td>
+                  <td class="text-center"><img src="" alt="Image" /></td>
+                  <td class="text-center"><a href="#"><i class="fa fa-pencil-square-o"></i></a></td>
+                  <td class="text-center"><a href="#"><i class="fa fa-fw fa-trash"></i></a></td>
+                </tr>
+                <tr>
+                  <td class="text-center">3.</td>
+                  <td class="text-center">Butter</td>
+                  <td class="text-center">&nbsp;</td>
+                  <td class="text-center">Veg</td>
+                  <td class="text-center"><img src="" alt="Image" /></td>
+                  <td class="text-center"><a href="#"><i class="fa fa-pencil-square-o"></i></a></td>
+                  <td class="text-center"><a href="#"><i class="fa fa-fw fa-trash"></i></a></td>
+                </tr>
+                <tr>
+                  <td class="text-center">4.</td>
+                  <td class="text-center">Hash Brown</td>
+                  <td class="text-center">&nbsp;</td>
+                  <td class="text-center">Veg</td>
+                  <td class="text-center"><img src="" alt="Image" /></td>
+                  <td class="text-center"><a href="#"><i class="fa fa-pencil-square-o"></i></a></td>
+                  <td class="text-center"><a href="#"><i class="fa fa-fw fa-trash"></i></a></td>
+                </tr>
+              </tbody></table>
+            </div>
+          </div>
+	  </div>	
+	</div>
+	<!-- Row Ends Here -->
+	</section>
+	<!-- /.content -->
+   </div>

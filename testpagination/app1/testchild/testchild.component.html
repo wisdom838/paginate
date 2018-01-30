@@ -1,0 +1,12 @@
+ <div *ngIf="childMessage">
+     <label>Employee Details</label>
+<p *ngFor="let childMessages of childMessage; let i=index">
+    Details {{i+1}}:  Name: {{childMessages.name}} - Age: {{childMessages.age}} - Address:{{childMessages.address}}
+</p>
+</div>
+
+
+<div *ngIf="childMessage===undefined">
+  {{items.item1}} <br/><br/><br/>
+ <button (click)=sendmessage()>Send Message</button>
+</div>

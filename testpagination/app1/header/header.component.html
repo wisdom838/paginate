@@ -1,0 +1,21 @@
+<html>
+ <title>
+Bijib Soft ltd
+</title>
+<head> </head>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" routerLink="home">Kitchen menu</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }"><a routerLink="home" >Home</a></li>
+        <li routerLinkActive="active"><a routerLink="items">AddItem</a></li>
+        <li [routerLinkActive]="['active']"><a routerLink="test">Breakfast</a></li>
+        <li [routerLinkActive]="['active']"><a routerLink="testchild">Lunch</a></li>
+        <li [routerLinkActive]="['active']"><a routerLink="dashboard">Dinner</a></li>
+      </ul>
+    </div>
+  </nav>
+  </html>
+  

@@ -1,0 +1,244 @@
+<html>
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <a [hidden]="setTitle('Registration From')"></a>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <form (ngSubmit)="onSubmit(form.value)" #frm="ngForm" class="form-horizontal">
+      <table class="table  table-bordered">
+        <tbody>
+          <tr>
+            <td colspan="4">
+              <span class="pull-right">Note:
+                <font color="#CC0000">* Fields are mandatory</font>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" id="hd">
+              <div class="add-on">
+                <h5>
+                  <b>
+                    <i class="fa fa-angle-double-right"></i> Registration Form</b>
+                </h5>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td width="33%" align="right">
+              <label for="fname">* Firstname </label>
+            </td>
+            <td>
+              <input type="text" name="fname" id="fname" class="form-control" [(ngModel)]="fname" pattern="[a-zA-Z ]*" required #fnm="ngModel">
+              <div *ngIf="fnm.errors && (fnm.dirty || fnm.touched)" class="alert alert-danger">
+                <div [hidden]="!fnm.errors.required">* Firstname Required</div>
+                <div [hidden]="!fnm.errors.pattern">* Inavlid Firstname</div>
+              </div>
+            </td>
+            <td width="33%" align="right">
+              <label for="lname">* Lastname </label>
+            </td>
+            <td>
+              <input type="text" name="lname" id="lname" class="form-control" [(ngModel)]="lname" pattern="[a-zA-Z ]*" required #lmn="ngModel">
+              <div *ngIf="lmn.errors && (lmn.dirty || lmn.touched)" class="alert alert-danger">
+                <div [hidden]="!lmn.errors.required">* Lastname Required</div>
+                <div [hidden]="!lmn.errors.pattern">* Invalid Lastname</div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td width="33%" align="right">
+              <label for="gender">* Gender </label>
+            </td>
+            <td>
+              <input type="radio" name="gender" id="gender" required value="Male" [(ngModel)]="gender" #gen="ngModel"> Male
+              <input type="radio" name="gender" id="gender" required value="Female" [(ngModel)]="gender" #gen="ngModel"> Female
+              <div *ngIf="gen.errors && (gen.dirty || gen.touched)" class="alert alert-danger">* Gender Required</div>
+            </td>
+            <td width="33%" align="right">
+              <label for="email">Email </label>
+            </td>
+            <td>
+              <input type="text" name="email" class="form-control" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" id="email" [(ngModel)]="email"
+                #em="ngModel">
+              <div *ngIf="em.errors && (em.dirty || em.touched)" class="alert alert-danger">
+                <div [hidden]="!em.errors.pattern">* Invalid Email</div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td width="33%" align="right">
+              <label for="hobbies">Hobbies </label>
+            </td>
+            <td>
+              <div *ngFor="let hobb of hobbie;let ed of editId">
+                <input type="checkbox" name="hobbies" (change)="posthobbies($event)" [checked]="selecthobbies(ed.hobbies)" value="{{hobb}}"> {{hobb}}
+              </div>
+            </td>
+            <td width="33%" align="right">
+              <label for="education">* Education </label>
+            </td>
+            <td>
+              <select name="education" id="education" class="form-control" required multiple [(ngModel)]="education" #edu="ngModel">
+                <option *ngFor="let ed of editId" [selected]="selecteducation(ed.education)" value="{{ed.education}}">{{ed.education}}</option>
+                <option *ngFor="let edu of educations" value="{{edu}}">{{edu}}</option>
+              </select>
+              <div *ngIf="edu.errors && (edu.dirty || edu.touched)" class="alert alert-danger">* Education Required</div>
+              <div *ngFor="let ed of editId">
+              <!-- <input type="hidden" name="eduvcation"  [hidden]="selecteducation(ed.education)" value="{{ed.education}}"> -->
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td width="33%" align="right">
+              <label for="mobile">* Mobile </label>
+            </td>
+            <td>
+              <input type="text" name="mobile" class="form-control" id="mobile" required [(ngModel)]="mobile" minlength="10" pattern="[0-9]+"
+                #mob="ngModel">
+              <div *ngIf="mob.errors && (mob.dirty || mob.touched)" class="alert alert-danger">
+                <div [hidden]="!mob.errors.required">* Mobile Required</div>
+                <div [hidden]="!mob.errors.pattern">* Invalid Mobile</div>
+                <div [hidden]="!mob.errors.minlength">* Enter Valid Mobile</div>
+              </div>
+            </td>
+            <td width="33%" align="right">
+              <label for="land">Land </label>
+            </td>
+            <td>
+              <input type="text" name="land" class="form-control" pattern="[0-9]+" id="land" [(ngModel)]="land" minlength="10" #lan="ngModel">
+              <div *ngIf="lan.errors && (lan.dirty || lan.touched)" class="alert alert-danger">
+                <div [hidden]="!lan.errors.pattern">* Invalid Land</div>
+                <div [hidden]="!lan.errors.minlength">* Enter valid Land</div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td width="33%" align="right">
+              <label for="country">* Country </label>
+            </td>
+            <td>
+              <select name="country" class="form-control" (change)="postCountryid($event.target.value)" id="country" [(ngModel)]="country"
+                #coun="ngModel" required>
+                <option value="">Select</option>
+                <option *ngFor="let cou of selcountry" value="{{cou.country_id}}">{{cou.country}}</option>
+              </select>
+              <div *ngIf="coun.errors && (coun.dirty || coun.touched)" class="alert alert-danger">
+                <div [hidden]="!coun.errors.required">* Country Required</div>
+              </div>
+            </td>
+            <td width="33%" align="right">
+              <label for="state">* State </label>
+            </td>
+            <td>
+              <select name="state" id="state" class="form-control" [(ngModel)]="state" #sta="ngModel" required>
+                <option value="">Select</option>
+                <option *ngFor="let sta of selstate" value="{{sta.state_id}}">{{sta.state}}</option>
+              </select>
+              <div *ngIf="sta.errors && (sta.dirty || sta.touched)" class="alert alert-danger">
+                <div [hidden]="!sta.errors.required">* State Required</div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td width="33%" align="right">
+              <label for="address">* Address </label>
+            </td>
+            <td>
+              <div>
+                <input type="text" name="address" class="form-control" required pattern="[a-zA-Z0-9 ]+" id="address" [(ngModel)]="address"
+                  #add="ngModel">
+                <div *ngIf="add.errors && (add.dirty || add.touched)" class="alert alert-danger">
+                  <div [hidden]="!add.errors.required">* Address Required</div>
+                  <div [hidden]="!add.errors.pattern">* Invalid Address</div>
+                </div>
+              </div>
+            </td>
+            <td width="33%" align="right">
+              <label for="pincode">* Pincode</label>
+            </td>
+            <td>
+              <input type="text" name="pincode" class="form-control" id="pincode" required pattern="[0-9]+" [(ngModel)]="pincode" #pin="ngModel">
+              <div *ngIf="pin.errors && (pin.dirty || pin.touched)" class="alert alert-danger">
+                <div [hidden]="!pin.errors.required">* Pincode Required</div>
+                <div [hidden]="!pin.errors.pattern">* Invalid Pincode</div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" align="center">
+              <input type="submit" class="btn btn-primary" value="{{submitBtn}}" [disabled]="!frm.valid" name="submit" id="submit">
+              <input type="reset" class="btn btn-default" value="Clear" (click)="resetId()" name="reset" id="reset">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+    <br>
+    <div *ngIf="showMessage" id="smg">
+      <div>Record {{showMessage}} Successfully!</div>
+    </div>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <td colspan="15" id="hd">
+            <h5>
+              <b>
+                <i class="fa fa-angle-double-right"></i> Registration Form </b>
+            </h5>
+          </td>
+        </tr>
+        <tr>
+          <th>S.No</th>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Gender</th>
+          <th>Email</th>
+          <th>Hobbies</th>
+          <th>Education</th>
+          <th>Mobile</th>
+          <th>Land</th>
+          <th>Country</th>
+          <th>State</th>
+          <th>Address</th>
+          <th>Pincode</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="returnJson.length == 0 ">
+          <td colspan="15" align="center">* No Records Found</td>
+        </tr>
+        <tr *ngFor="let res of returnJson;let i=index">
+          <td align="center">{{i + 1}}</td>
+          <td align="center">{{res.fname}}</td>
+          <td align="center">{{res.lname}}</td>
+          <td align="center">{{res.gender}}</td>
+          <td align="center">{{res.email}}</td>
+          <td align="center">{{res.hobbies}}</td>
+          <td align="center">{{res.education}}</td>
+          <td align="center">{{res.mobile}}</td>
+          <td align="center">{{res.land}}</td>
+          <td align="center">{{res.country}}</td>
+          <td align="center">{{res.state}}</td>
+          <td align="center">{{res.address}}</td>
+          <td align="center">{{res.pincode}}</td>
+          <td align="center">
+            <label (click)="editDataVal(res.id)">
+              <a class="fa fa-pencil" title="Edit"></a>
+            </label>
+          </td>
+          <td align="center">
+            <label (click)="deleteValues(res.id)">
+              <a class="fa fa-trash-o" title="Delete"></a>
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

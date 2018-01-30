@@ -1,0 +1,64 @@
+
+<html>
+    <body>
+     <div class="bindings">
+     <div>{{name}}</div>
+    <button  (click)="saveData()">save</button>
+    <button  (click)="updateData()">update</button>
+     <div class="{{save}}">You click on save</div>
+      <div class={{update}}>You click on update</div>
+    </div>
+    
+    
+    <h4>NgStyle</h4>
+      <ul *ngFor="let person of people" class="{{country}}">
+        <!-- <li [ngStyle]="{'color':getColor(person.country)}"> {{ person.name }} ({{ person.country }}) 
+        </li> -->
+      <li [ngClass]="{'text-success':person.country === 'UK','text-primary':person.country === 'USA','text-danger':person.country === 'HK'}">
+          {{ person.name }} ({{ person.country }})
+      </li>
+      </ul>
+       <button  (click)="countryData()">Country Data</button>
+     <input type="text" name="uname" [attr.value]="unameval">
+
+      <div> <label>Two way binding </label><input type="text" name="location" value="chennai" [(ngModel)]="location" ></div>
+
+       <p>Im from {{location}}</p>
+
+       <div>
+         <label>Two way binding custom</label>
+          <input [value]="username" (input)="username = $event.target.value">
+          
+          <p>Hello {{username}}!</p>
+
+       </div>
+    
+       <table border="1">
+          <thead>
+          <th  [attr.colspan]="clspn">1</th>
+          <th>2</th>
+          <th>3</th>
+          </thead>
+          <tbody> 
+              <tr><td>A</td><td>B</td><td>C</td></tr>
+              <tr><td>D</td><td>E</td><td>F</td></tr>
+              <tr><td>X</td><td>Y</td><td>Z</td></tr>
+            </tbody>
+          </table>
+          <br/><br/>
+
+          <button (click)="EmpDetails()">Employee List</button><br/><br/>
+          <table border="1" class="stylesObj">
+            <thead>
+            <th>id</th>
+            <th>name</th>
+            <th>salary</th>
+            <th>addres</th>
+            </thead>
+            <tbody> 
+                <tr><td>1</td><td>hari</td><td>50000</td><td>Banglore</td></tr>
+                
+              </tbody>
+            </table>
+    </body>
+    </html>

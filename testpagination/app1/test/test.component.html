@@ -1,0 +1,17 @@
+<div class=col-md-offset-1>
+<p>
+  {{locations.name}}<br> <br><br>
+  Message: {{message}}
+  <app-testchild (messageEvent)="receiveMessage($event)"></app-testchild>
+</p>
+
+
+<div *ngFor="let address of locations; let i=index">
+  <label>Sno: </label>{{i+1}}<br>
+  <label>Name: </label>{{address.name}}<br>
+  <label>Email: </label>{{address.email}}<br>
+  <label>Location: </label>{{address.location}}<br>
+ <div> </div>
+</div>
+<app-testchild [childMessage]="parentMessage" ></app-testchild>
+</div>

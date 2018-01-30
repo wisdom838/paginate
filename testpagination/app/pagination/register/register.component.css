@@ -1,0 +1,25 @@
+
+  .control-label.required:after { 
+    color: #d00;
+    content: "*";
+    position: absolute;
+    margin-left: 5px;
+    top:7px;
+}
+button.btn.btn-primary {
+ 
+  margin: 40px !important;
+  
+}
+
+.form-horizontal{
+
+align-content: center;
+width:80%;
+
+}
+select{
+
+height:35px !important;
+
+}
